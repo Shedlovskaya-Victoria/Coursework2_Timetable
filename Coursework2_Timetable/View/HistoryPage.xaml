@@ -1,0 +1,90 @@
+﻿<Page x:Class="Coursework2_Timetable.View.HistoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Coursework2_Timetable.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="900"
+      Title="История проектов">
+    <Page.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="Background" Value="#eafdfd"/>
+            <!--    <Setter Property="TextBlock.FontFamily" Value="Times New Roman"/>-->
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition  />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--шапка-->
+        <StackPanel Grid.Column="0" Grid.RowSpan="3"
+                   Margin="5" Orientation="Vertical">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#00f4dc" Offset="0.1"/>
+                    <GradientStop Color="Black" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <TextBlock Text="{Binding p.UserName}" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding p.UserLastName}" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding p.UserMiddleName}" HorizontalAlignment="Center"/>
+            <Menu>
+                <MenuItem Header="Меню" HorizontalAlignment="Center" >
+                    <MenuItem Header="На главную" Click="ClickGoMainPage"/>
+                    <MenuItem Header="Новый проект" Click="ClickAddNewProject"/>
+                </MenuItem>
+            </Menu>
+            <Button Content="подробнее о проекте" Click="ClickAllInf"/>
+            <Button Content="удалить проект" Click="ClikDeleteProject"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Orientation="Horizontal"
+                    Grid.ColumnSpan="2" Grid.Column="1"
+                    Margin="5">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#00f4dc" Offset="0.3"/>
+                    <GradientStop Color="Black" Offset="2"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Поиск"/>
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Сортировка по дате"/>
+                <ComboBox ItemsSource="{Binding Sorting, UpdateSourceTrigger=PropertyChanged}" 
+                          SelectedItem="{Binding SelectedSorting, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Тип проекта"/>
+                <ComboBox ItemsSource="{Binding Types, UpdateSourceTrigger=PropertyChanged}" 
+                          SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="Type1"/>
+            </StackPanel>
+        </StackPanel>
+        <ListView ItemsSource="{Binding Projects}" 
+                  SelectedItem="{Binding SelectedProject}"
+                  Grid.Column="1" Grid.Row="2" Margin="1,1,1,1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="№" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Дата начала" DisplayMemberBinding="{Binding StartDate, StringFormat=dd.mm.yyyy}"/>
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Title}"/>
+                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding IdtypeNavigation.Type1}"/>
+                    <GridViewColumn Header="Тема" DisplayMemberBinding="{Binding Theme}"/>
+                    <GridViewColumn Header="Цель" DisplayMemberBinding="{Binding Target}"/>
+                    <GridViewColumn Header="Kлиент" DisplayMemberBinding="{Binding ClientLastName}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>
